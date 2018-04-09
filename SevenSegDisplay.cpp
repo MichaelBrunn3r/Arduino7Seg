@@ -2,7 +2,7 @@
 #include "SevenSegDisplay.h"
 
 SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags) 
-    : mNumDigits(numDigits), mTLEDOn(tLEDOn), mTLastUpdateMicros(micros()), mIndexLastUpdatedDigit(numDigits) 
+    : mNumDigits(numDigits), mTLEDOn(tLEDOn), mIndexLastUpdatedDigit(numDigits) 
 {
     // Configure & Initialize Pins
     mDigitPins = digitPins;
@@ -31,6 +31,7 @@ SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte 
 
 void SevenSegDisplay::setSegs(const int digit, const byte segments) {
     mDigitCodes[digit] = segments;
+    mUpdateRequired = true;
 }
 
 void SevenSegDisplay::setChar(const int digit, const char ch) {
@@ -40,20 +41,24 @@ void SevenSegDisplay::setChar(const int digit, const char ch) {
 
 void SevenSegDisplay::setStr(const size_t length, const char str[]) {
     for(int i=0; i<mNumDigits; i++) {
-        if(i+1 > length) return;
-        setChar(i, str[i]);
+        if(i < length) setChar(i, str[i]);
+        else setSegs(i, 0);
     }
 }
 
 void SevenSegDisplay::tick() {
     unsigned long tCurrent = micros();
-    if((unsigned long)(tCurrent - mTLastUpdateMicros) >= mTLEDOn) {
+    if(mUpdateRequired && (unsigned long)(tCurrent - mTLastUpdateMicros) >= mTLEDOn) {
         mTLastUpdateMicros = tCurrent;
-        display();
+        update();
+
+        // Displays with multiple Digits need constant updates, because only one digit can be displayed at a time.
+        // Displays with one Digit only need updates when the Digit Codes change.
+        if(mNumDigits == 1) mUpdateRequired = false;
     }
 }
 
-void SevenSegDisplay::display() {
+void SevenSegDisplay::update() {
     unsigned int indexCurrentDigit = (mIndexLastUpdatedDigit + 1) % mNumDigits;
 
     digitalWrite(mDigitPins[mIndexLastUpdatedDigit], mDigitOff);

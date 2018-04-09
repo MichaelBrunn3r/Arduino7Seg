@@ -19,22 +19,27 @@
 class SevenSegDisplay {
     private:
         bool mDigitOn, mDigitOff, mSegOn, mSegOff;
+        bool mUpdateRequired = true;
         size_t mNumDigits; // Number of Digits
         byte* mDigitPins; // Array containing the Arduino pins for the Digits
         byte* mSegPins; // Array containing the Arduino pins for the Segments 
         byte* mDigitCodes;
-        unsigned int mIndexLastUpdatedDigit;
+        unsigned int mIndexLastUpdatedDigit = micros();
         unsigned long mTLEDOn; // Time each LED is on
         unsigned long mTLastUpdateMicros; // Last Update Time in micro seconds
         Dictionary<char,byte> mCharCodes;
-        void display();
+        void update();
         byte getSegPin(const Segment seg);
     public:
         SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn = 4000, const unsigned int flags = FLAG_7SEG_COMMON_GROUND);
         void setSegs(const int digit, const byte segments);
         void setChar(const int digit, const char ch);
+        /* 
+            Changes the Display to show a string. Each digit is set to the n-th character. 
+            If the string has less characters than the display has digits, the remaining digits are left empty. 
+            Excessive characters are ignored.
+        */
         void setStr(const size_t length, const char str[]);
-        void setNum(const int num);
         void tick();
 };
 
