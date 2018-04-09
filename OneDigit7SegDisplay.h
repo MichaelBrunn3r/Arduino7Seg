@@ -4,11 +4,8 @@
 #define PIN_UNDEFINED 255
 
 #include "Arduino.h"
+#include "Segments.h"
 #include <Dictionary.h>
-
-enum Segment {
-		a=1, b=2, c=4, d=8, e=16, f=32, g=64, h=128
-};
 
 class OneDigit7SegDisplay {
 	public:
