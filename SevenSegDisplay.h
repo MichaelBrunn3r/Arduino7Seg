@@ -19,7 +19,7 @@
 class SevenSegDisplay {
     private:
         bool mDigitOn, mDigitOff, mSegOn, mSegOff;
-        unsigned int mNumDigits; // Number of Digits
+        size_t mNumDigits; // Number of Digits
         byte* mDigitPins; // Array containing the Arduino pins for the Digits
         byte* mSegPins; // Array containing the Arduino pins for the Segments 
         byte* mDigitCodes;
@@ -30,10 +30,9 @@ class SevenSegDisplay {
         void display();
         byte getSegPin(const Segment seg);
     public:
-        SevenSegDisplay(byte digitPins[], byte segPins[]);
-        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[]);
-        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn);
-        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags);
+        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[]);
+        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn);
+        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags);
         void setSegs(const int digit, const byte segments);
         void setChar(const int digit, const char ch);
         void setStr(const size_t length, const char str[]);
