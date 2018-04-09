@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include <Dictionary.h>
-#include "Segments.h"
+#include "SevenSeg.h"
 
 #define DEFAULT_7SEG_CHARS "0123456789abcdefghijklmnopqrstuvwxyz.,-_'\""
 #define DEFAULT_7SEG_CHARS_COUNT strlen(DEFAULT_7SEG_CHARS)

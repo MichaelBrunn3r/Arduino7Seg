@@ -19,10 +19,9 @@ SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte 
     for(int i=0; i<mNumDigits; i++) mDigitCodes[i] = 0;
 
     // Populate Char Codes
-    mCharCodes = Dictionary<char,byte>(DEFAULT_7SEG_CHARS_COUNT);
     char chars[] = DEFAULT_7SEG_CHARS;
     byte codes[] = DEFAULT_7SEG_CHAR_CODES;
-    mCharCodes.putAll(DEFAULT_7SEG_CHARS_COUNT, chars, codes);
+    mCharCodes = Dictionary<char,byte>(DEFAULT_7SEG_CHARS_COUNT, chars, codes);
 
     // Configure Common Cathode/Anode
     if((flags & FLAG_7SEG_COMMON_GROUND) == FLAG_7SEG_COMMON_GROUND) mFlags.digitOn = mFlags.segOff = !(mFlags.digitOff = mFlags.segOn = HIGH);
