@@ -18,15 +18,18 @@
 
 class SevenSegDisplay {
     private:
-        bool mDigitOn, mDigitOff, mSegOn, mSegOff;
-        bool mUpdateRequired = true;
+        struct flagContainer {
+            flagContainer() : updateRequired(true) {}
+            bool digitOn:1, digitOff:1, segOn:1, segOff:1;
+            bool updateRequired:1;
+        } mFlags;
         size_t mNumDigits; // Number of Digits
         byte* mDigitPins; // Array containing the Arduino pins for the Digits
         byte* mSegPins; // Array containing the Arduino pins for the Segments 
         byte* mDigitCodes;
-        unsigned int mIndexLastUpdatedDigit = micros();
+        unsigned int mIndexLastUpdatedDigit;
         unsigned long mTLEDOn; // Time each LED is on
-        unsigned long mTLastUpdateMicros; // Last Update Time in micro seconds
+        unsigned long mTLastUpdateMicros = micros(); // Last Update Time in micro seconds
         Dictionary<char,byte> mCharCodes;
         void update();
         byte getSegPin(const Segment seg);

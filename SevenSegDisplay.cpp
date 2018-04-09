@@ -25,13 +25,13 @@ SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte 
     mCharCodes.putAll(DEFAULT_7SEG_CHARS_COUNT, chars, codes);
 
     // Configure Common Cathode/Anode
-    if((flags & FLAG_7SEG_COMMON_GROUND) == FLAG_7SEG_COMMON_GROUND) mDigitOn = mSegOff = !(mDigitOff = mSegOn = HIGH);
-    else mDigitOn = mSegOff = !(mDigitOff = mSegOn = LOW);
+    if((flags & FLAG_7SEG_COMMON_GROUND) == FLAG_7SEG_COMMON_GROUND) mFlags.digitOn = mFlags.segOff = !(mFlags.digitOff = mFlags.segOn = HIGH);
+    else mFlags.digitOn = mFlags.segOff = !(mFlags.digitOff = mFlags.segOn = LOW);
 }
 
 void SevenSegDisplay::setSegs(const int digit, const byte segments) {
     mDigitCodes[digit] = segments;
-    mUpdateRequired = true;
+    mFlags.updateRequired = true;
 }
 
 void SevenSegDisplay::setChar(const int digit, const char ch) {
@@ -48,21 +48,21 @@ void SevenSegDisplay::setStr(const size_t length, const char str[]) {
 
 void SevenSegDisplay::tick() {
     unsigned long tCurrent = micros();
-    if(mUpdateRequired && (unsigned long)(tCurrent - mTLastUpdateMicros) >= mTLEDOn) {
+    if(mFlags.updateRequired && (unsigned long)(tCurrent - mTLastUpdateMicros) >= mTLEDOn) {
         mTLastUpdateMicros = tCurrent;
         update();
 
         // Displays with multiple Digits need constant updates, because only one digit can be displayed at a time.
         // Displays with one Digit only need updates when the Digit Codes change.
-        if(mNumDigits == 1) mUpdateRequired = false;
+        if(mNumDigits == 1) mFlags.updateRequired = false;
     }
 }
 
 void SevenSegDisplay::update() {
     unsigned int indexCurrentDigit = (mIndexLastUpdatedDigit + 1) % mNumDigits;
 
-    digitalWrite(mDigitPins[mIndexLastUpdatedDigit], mDigitOff);
-    digitalWrite(mDigitPins[indexCurrentDigit], mDigitOn);
+    digitalWrite(mDigitPins[mIndexLastUpdatedDigit], mFlags.digitOff);
+    digitalWrite(mDigitPins[indexCurrentDigit], mFlags.digitOn);
 
     digitalWrite(getSegPin(b), (mDigitCodes[indexCurrentDigit] & b) == b);
     digitalWrite(getSegPin(c), (mDigitCodes[indexCurrentDigit] & c) == c);
