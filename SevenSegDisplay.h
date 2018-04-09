@@ -19,20 +19,20 @@
 class SevenSegDisplay {
     private:
         bool mDigitOn, mDigitOff, mSegOn, mSegOff;
-        int mNumDigits; // Number of Digits
+        unsigned int mNumDigits; // Number of Digits
         byte* mDigitPins; // Array containing the Arduino pins for the Digits
         byte* mSegPins; // Array containing the Arduino pins for the Segments 
         byte* mDigitCodes;
         byte mSegStates; // The current states (on/off) of all Segments, saved in one byte
-        byte mIndexLastUpdatedDigit;
+        unsigned int mIndexLastUpdatedDigit;
         unsigned long mTLEDOn; // Time each LED is on
         unsigned long mTLastUpdateMicros; // Last Update Time in micro seconds
         Dictionary<char,byte> mCharCodes;
     public:
         SevenSegDisplay(byte digitPins[], byte segPins[]);
-        SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[]);
-        SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn);
-        SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags);
+        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[]);
+        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn);
+        SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags);
         void setSegs(const int digit, const byte segments);
         void setChar(const int digit, const char ch);
         void setStr(const size_t length, const char str[]);

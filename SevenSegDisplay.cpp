@@ -3,13 +3,13 @@
 
 SevenSegDisplay::SevenSegDisplay(byte digitPins[], byte segPins[]) : SevenSegDisplay(1, digitPins, segPins) {}
 
-SevenSegDisplay::SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[]) 
+SevenSegDisplay::SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[]) 
     : SevenSegDisplay(numDigits, digitPins, segPins, 500, FLAG_7SEG_COMMON_GROUND) {}
 
-SevenSegDisplay::SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn) 
+SevenSegDisplay::SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn) 
     : SevenSegDisplay(numDigits, digitPins, segPins, tLEDOn, FLAG_7SEG_COMMON_GROUND) {}
 
-SevenSegDisplay::SevenSegDisplay(const int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags) 
+SevenSegDisplay::SevenSegDisplay(const unsigned int numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags) 
     : mNumDigits(numDigits), mSegStates(0), mTLEDOn(tLEDOn), mTLastUpdateMicros(micros()), mIndexLastUpdatedDigit(0) 
 {
     // Configure & Initialize Pins
