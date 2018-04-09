@@ -30,14 +30,12 @@ class SevenSegDisplay {
         void display();
         byte getSegPin(const Segment seg);
     public:
-        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[]);
-        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn);
-        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags);
+        SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn = 4000, const unsigned int flags = FLAG_7SEG_COMMON_GROUND);
         void setSegs(const int digit, const byte segments);
         void setChar(const int digit, const char ch);
         void setStr(const size_t length, const char str[]);
+        void setNum(const int num);
         void tick();
-        
 };
 
 #endif

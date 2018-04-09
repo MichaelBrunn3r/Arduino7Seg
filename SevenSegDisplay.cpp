@@ -1,11 +1,6 @@
 #include "Arduino.h"
 #include "SevenSegDisplay.h"
 
-SevenSegDisplay::SevenSegDisplay(byte digitPins[], byte segPins[]) : SevenSegDisplay(1, digitPins, segPins) {}
-
-SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn) 
-    : SevenSegDisplay(numDigits, digitPins, segPins, tLEDOn, FLAG_7SEG_COMMON_GROUND) {}
-
 SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags) 
     : mNumDigits(numDigits), mTLEDOn(tLEDOn), mTLastUpdateMicros(micros()), mIndexLastUpdatedDigit(numDigits) 
 {
