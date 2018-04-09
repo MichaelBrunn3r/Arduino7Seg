@@ -1,4 +1,3 @@
-#include "Arduino.h"
 #include "SevenSegDisplay.h"
 
 SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte segPins[], const unsigned long tLEDOn, const unsigned int flags) 
@@ -21,7 +20,10 @@ SevenSegDisplay::SevenSegDisplay(const size_t numDigits, byte digitPins[], byte 
     // Populate Char Codes
     char chars[] = DEFAULT_7SEG_CHARS;
     byte codes[] = DEFAULT_7SEG_CHAR_CODES;
-    mCharCodes = Dictionary<char,byte>(DEFAULT_7SEG_CHARS_COUNT, chars, codes);
+    //mCharCodes = Dictionary<char,byte>(DEFAULT_7SEG_CHARS_COUNT, chars, codes);
+    mCharCodes = Dictionary<char,byte>(DEFAULT_7SEG_CHARS_COUNT);
+    mCharCodes.putAll(DEFAULT_7SEG_CHARS_COUNT, chars, codes, true);
+
 
     // Configure Common Cathode/Anode
     if((flags & FLAG_7SEG_COMMON_GROUND) == FLAG_7SEG_COMMON_GROUND) mFlags.digitOn = mFlags.segOff = !(mFlags.digitOff = mFlags.segOn = HIGH);
